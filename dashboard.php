@@ -24,8 +24,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <p>
         <a href="reset-password.php" class="btn btn-primary">Reset Your Password</a>
         <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
-        <a href="reg.php" class="btn btn-secondary ml-3">Register new user</a>.</p>
+        <a href="reg.php" class="btn btn-secondary ml-3">Add new user</a>.</p>
         <p>Free disk space: <?php echo round(disk_free_space("/") / 1024 / 1024 / 1024);?> / <?php echo round(disk_total_space("/")/ 1024 / 1024 / 1024); ?> GB</p>
     </p>
+    <main>
+        
+    </main>
 </body>
 </html>
