@@ -7,6 +7,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+require "../config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,36 +18,36 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
     </style>
+    <script>
+      function delData(id){
+        var request = new XMLHttpRequest();
+        request.open("GET", `../actions/delete.php?num=${id}`, true);
+        request.send();
+        window.location.reload();
+      }
+    </script>
 </head>
 <body style="overflow-y: hidden;">
 <table class="table table-dark">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">id</th>
+      <th scope="col">username</th>
+      <th scope="col">Creation date</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    <?php
+    // $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $quer = $mysqli->query('SELECT id, username, created_at FROM users');
+
+    while($row = $quer->fetch_assoc()){
+        echo "<tr><th>".$row['id']."</th> <td>".$row['username']."</td> <td>".$row['created_at']."</td>";
+        echo "<td><button class='btn btn-danger' onclick='delData(".$row['id'].")'>Delete</button></td>";
+        echo "</tr>";
+    }
+    ?>
   </tbody>
 </table>
 <hr>
