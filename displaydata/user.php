@@ -50,7 +50,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   </tbody>
 </table>
 <hr>
-    <a href="reg.php" class="btn btn-primary">Add new user</a></p>
-    <a href="reset-password.php" class="btn btn-secondary">Reset Your Password</a>
+    <a href="../reg.php" target="_parent" class="btn btn-primary">Add new user</a></p>
+    <a href="../reset-password.php" target="_parent" class="btn btn-secondary">Reset Your Password</a>
 </body>
 </html>

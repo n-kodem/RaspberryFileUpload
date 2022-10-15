@@ -98,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link ml-2" href="dashboard.php">Cancel</a>
+                <a class="btn btn-link ml-2" href="dashboard.php?panel=user">Cancel</a>
             </div>
         </form>
     </div>    
