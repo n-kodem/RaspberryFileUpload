@@ -8,7 +8,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 ?>
- 
+<?php
+    $panelname="files";
+    if(isset($_GET['panel'])){
+        if($_GET['panel'] == 'user')
+            $panelname='user';
+        else if($_GET['panel'] == 'usage')
+            $panelname='usage';
+    }
+?>
  <!DOCTYPE html>
 <html data-fbscriptallow="true" class=" viroraima idc0_343" lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -118,25 +126,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
+        <a href="?panel=0" <?php if ($panelname == 'files') echo "class='nav-link active' aria-current='page'"; else echo "class='nav-link text-white'"; ?> >
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
           Dashboard
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="?panel=usage" <?php if ($panelname == 'usage') echo "class='nav-link active' aria-current='page'"; else echo "class='nav-link text-white'"; ?>>
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
           Usage data
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="?panel=user" <?php if ($panelname == 'user') echo "class='nav-link active' aria-current='page'"; else echo "class='nav-link text-white'"; ?>>
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
           User Control
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="#" <?php if ($panelname == 'place') echo "class='nav-link active' aria-current='page'"; else echo "class='nav-link text-white'"; ?>>
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
           placehold
         </a>
@@ -151,11 +159,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <hr>
     <p>Available space: <?php echo round(disk_free_space("/") / 1024 / 1024 / 1024);?> / <?php echo round(disk_total_space("/")/ 1024 / 1024 / 1024); ?> GB</p>
     <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar" role="progressbar" 
+
+      style="width: <?php echo 100-round((round(disk_free_space("/") / 1024 / 1024 / 1024)/round(disk_total_space("/")/ 1024 / 1024 / 1024))*100) ?>%" 
+      aria-valuenow="<?php echo 100-round((round(disk_free_space("/") / 1024 / 1024 / 1024)/round(disk_total_space("/")/ 1024 / 1024 / 1024))*100) ?>" 
+      
+      aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <hr>
-    <a href="reg.php" class="btn btn-primary">Add new user</a></p>
-    <a href="reset-password.php" class="btn btn-secondary">Reset Your Password</a>
   </div>
 
   <header class="d-block p-3 bg-dark text-white float-left" style="height: fit-content;width: 85%;">
@@ -173,7 +183,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     
   </header>
 
-  <iframe src="displaydata/files.php" class="d-block p-3 bg-white float-right" style="float:left;width: 85%;height: 90vh;overflow-y: scroll;border: none;"></iframe>
+  <?php
+    echo "<iframe src='displaydata/$panelname.php' class='d-block p-3 bg-white float-right' style='float:left;width: 85%;height: 90vh;overflow-y: scroll;border: none;'></iframe>";
+  ?>
 
 </body>
 </html>
